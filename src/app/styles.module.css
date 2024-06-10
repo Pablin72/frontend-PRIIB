@@ -1,0 +1,138 @@
+.body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.header_left h1 {
+  margin: 0;
+}
+
+.header_right .sign_in {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.header .sign_in:hover {
+  background-color: #0056b3;
+}
+
+.main {
+  padding: 20px;
+}
+
+.form_group {
+  margin-bottom: 20px;
+}
+
+.form_group .label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form_group .input_text {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+/* .form_group  options {
+
+} */
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  border-top: 1px solid #ddd;
+}
+
+.footer_left a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.footer_left a:hover {
+  text-decoration: underline;
+}
+
+.footer_right p {
+  margin: 0;
+}
+
+.submit_button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit_button:hover {
+  background-color: #0056b3;
+}
+
+.tableContainer {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.tableContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tableContainer th, .tableContainer td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.tableContainer th {
+  background-color: #f4f4f4;
+}
+
+.tableContainer tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination button.active {
+  background-color: #0056b3;
+}
+
+.pagination button:hover {
+  background-color: #0056b3;
+}
