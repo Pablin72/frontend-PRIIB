@@ -4,34 +4,12 @@ const url = axios.create({
   baseURL: 'http://127.0.0.1:5000'
 });
 
-// export const getAllAlerts = (azureTenantsIdCollection, headers) => {
-//   const argsQuery = azureTenantsIdCollection.map(id => `tenantIds=${id}`).join('&');
-//   const urlQuery = 'api/Alerts/Lista?' + argsQuery;
-//   return url.get(urlQuery, { headers })
-//     .then((result) => {
-//       console.log("from repo result alerts", result.data);
-//       return result.data;
-//     }).catch((error) => {
-//       console.log(`Alertas web request error: ${error}`);
-//     });
-// };
-
-export const cosineComparison = (body) => {
+export const lemmatized_bow_cosine = (body) => {
   const bodyString = {query: body}
   const headers = {
     'Content-Type': 'application/json',
   }
-  return url.post('/cosine', bodyString, headers)
-    .then((result) => {
-      return result.data.filter((item) => item.Cosine_Similarity > 0);
-    }).catch((error) => {
-      console.log(`repo error: ${error}`);
-      console.log(error.response);
-    });
-};
-
-export const jaccardComparison = (body) => {
-  return url.post('/jaccard', body)
+  return url.post('/lemmatized/bow/cosine', bodyString, {headers})
     .then((result) => {
       console.log("from repo");
       console.log(result.data);
@@ -42,8 +20,12 @@ export const jaccardComparison = (body) => {
     });
 };
 
-export const tfIdfComparison = (body) => {
-  return url.post('/tfidf', body)
+export const stemmed_bow_cosine = (body) => {
+  const bodyString = {query: body}
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  return url.post('/stemmed/bow/cosine', bodyString, {headers})
     .then((result) => {
       console.log("from repo");
       console.log(result.data);
@@ -54,12 +36,92 @@ export const tfIdfComparison = (body) => {
     });
 };
 
-export const executeRemoteCommand = (name, age) => {
-  const newAlert = {
-    name: name,
-    age: age
-  };
-  return url.post('/example', newAlert)
+export const lemmatized_tfidf_cosine = (body) => {
+  const bodyString = {query: body}
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  return url.post('/lemmatized/tfidf/cosine', bodyString, {headers})
+    .then((result) => {
+      console.log("from repo");
+      console.log(result.data);
+      return result.data;
+    }).catch((error) => {
+      console.log(`repo error: ${error}`);
+      console.log(error.response);
+    });
+};
+
+export const stemmed_tfidf_cosine = (body) => {
+  const bodyString = {query: body}
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  return url.post('/stemmed/tfidf/cosine', bodyString, {headers})
+    .then((result) => {
+      console.log("from repo");
+      console.log(result.data);
+      return result.data;
+    }).catch((error) => {
+      console.log(`repo error: ${error}`);
+      console.log(error.response);
+    });
+};
+
+export const stemmed_bow_jaccard = (body) => {
+  const bodyString = {query: body}
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  return url.post('/stemmed/bow/jaccard', bodyString, {headers})
+    .then((result) => {
+      console.log("from repo");
+      console.log(result.data);
+      return result.data;
+    }).catch((error) => {
+      console.log(`repo error: ${error}`);
+      console.log(error.response);
+    });
+};
+
+export const lemmatized_bow_jaccard = (body) => {
+  const bodyString = {query: body}
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  return url.post('/lemmatized/bow/jaccard', bodyString, {headers})
+    .then((result) => {
+      console.log("from repo");
+      console.log(result.data);
+      return result.data;
+    }).catch((error) => {
+      console.log(`repo error: ${error}`);
+      console.log(error.response);
+    });
+};
+
+export const stemmed_tfidf_jaccard = (body) => {
+  const bodyString = {query: body}
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  return url.post('/stemmed/tfidf/jaccard', bodyString, {headers})
+    .then((result) => {
+      console.log("from repo");
+      console.log(result.data);
+      return result.data;
+    }).catch((error) => {
+      console.log(`repo error: ${error}`);
+      console.log(error.response);
+    });
+};
+
+export const lemmatized_tfidf_jaccard = (body) => {
+  const bodyString = {query: body}
+  const headers = {
+    'Content-Type': 'application/json',
+  }
+  return url.post('/lemmatized/tfidf/jaccard', bodyString, {headers})
     .then((result) => {
       console.log("from repo");
       console.log(result.data);

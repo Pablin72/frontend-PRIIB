@@ -2,12 +2,22 @@
 import { useState } from 'react';
 import Styles from './styles.module.css';
 
-import { cosineComparison, jaccardComparison, tfIdfComparison } from '../repos/inforRetrieval';
+import {
+  lemmatized_bow_cosine,
+  stemmed_bow_cosine,
+  lemmatized_tfidf_cosine,
+  stemmed_tfidf_cosine,
+  stemmed_bow_jaccard,
+  lemmatized_bow_jaccard,
+  stemmed_tfidf_jaccard,
+  lemmatized_tfidf_jaccard
+} from '../repos/inforRetrieval';
 
 export default function Home() {
   const [formData, setFormData] = useState({
     textInput: '',
     preprocess: '',
+    representation: '',
     comparison: '',
   });
 
@@ -32,24 +42,52 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (formData.comparison === 'cosine') {
-      await cosineComparison(formData.textInput)
-        .then((result) => {
-          console.log("from home");
-          console.log(result);
-          setResult(result);
-        })
+    
+    if(formData.preprocess === '' && formData.representation === '' && formData.comparison === '') {
+      alert("Please select all options");
+      return;
     };
 
-    if (formData.comparison === 'jaccard') {
-      jaccardComparison(formData.textInput)
+    if(formData.preprocess === 'lemmatized' && formData.representation === 'bow' && formData.comparison === 'cosine') {
+      setResult(await lemmatized_bow_cosine(formData.textInput));
+      return;
     };
 
-    if (formData.comparison === 'tf_idf') {
-      tfIdfComparison(formData.textInput)
+    if(formData.preprocess === 'stemmized' && formData.representation === 'bow' && formData.comparison === 'cosine') {
+      setResult(await stemmed_bow_cosine(formData.textInput));
+      return;
     };
-  }
+
+    if(formData.preprocess === 'lemmatized' && formData.representation === 'tf_idf' && formData.comparison === 'cosine') {
+      setResult(await lemmatized_tfidf_cosine(formData.textInput));
+      return;
+    };
+
+    if(formData.preprocess === 'stemmized' && formData.representation === 'tf_idf' && formData.comparison === 'cosine') {
+      setResult(await stemmed_tfidf_cosine(formData.textInput));
+      return;
+    };
+
+    if(formData.preprocess === 'stemmized' && formData.representation === 'bow' && formData.comparison === 'jaccard') {
+      setResult(await stemmed_bow_jaccard(formData.textInput));
+      return;
+    };
+
+    if(formData.preprocess === 'lemmatized' && formData.representation === 'bow' && formData.comparison === 'jaccard') {
+      setResult(await lemmatized_bow_jaccard(formData.textInput));
+      return;
+    };
+
+    if(formData.preprocess === 'stemmized' && formData.representation === 'tf_idf' && formData.comparison === 'jaccard') {
+      setResult(await stemmed_tfidf_jaccard(formData.textInput));
+      return;
+    };
+
+    if(formData.preprocess === 'lemmatized' && formData.representation === 'tf_idf' && formData.comparison === 'jaccard') {
+      setResult(await lemmatized_tfidf_jaccard(formData.textInput));
+      return;
+    };
+  };
 
   return (
     <div>
@@ -67,13 +105,18 @@ export default function Home() {
             <label htmlFor="lemmatized">Lemmatized</label>
           </div>
           <div className={Styles.form_group}>
-            <label>Comparation Method:</label>
+            <label>Documents Representation:</label>
+            <input type="radio" id="tf_idf" name="representation" value="tf_idf" checked={formData.representation === 'tf_idf'} onChange={handleChange}></input>
+            <label htmlFor="tf_idf">TF-IDF</label>
+            <input type="radio" id="bow" name="representation" value="bow" checked={formData.representation === 'bow'} onChange={handleChange}></input>
+            <label htmlFor="bow">Bag of Words</label>
+          </div>
+          <div className={Styles.form_group}>
+            <label>Comparison Method:</label>
             <input type="radio" id="jaccard" name="comparison" value="jaccard" checked={formData.comparison === 'jaccard'} onChange={handleChange}></input>
             <label htmlFor="jaccard">Jaccard</label>
             <input type="radio" id="cosine" name="comparison" value="cosine" checked={formData.comparison === 'cosine'} onChange={handleChange}></input>
             <label htmlFor="cosine">Cosine</label>
-            <input type="radio" id="tf_idf" name="comparison" value="tf_idf" checked={formData.comparison === 'tf_idf'} onChange={handleChange}></input>
-            <label htmlFor="tf_idf">TF_IDF</label>
           </div>
           <div className={Styles.form_group}>
             <button type="submit" className={Styles.submit_button}>Search</button>
