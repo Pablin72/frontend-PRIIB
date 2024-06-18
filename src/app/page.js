@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import Styles from './styles.module.css';
+import Modal from './modal';
 
 import {
+  getDocumentByName,
   lemmatized_bow_cosine,
   stemmed_bow_cosine,
   lemmatized_tfidf_cosine,
@@ -63,6 +65,27 @@ export default function Home() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 7;
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+  const openModal = async (filename) => {
+    const data = await getDocumentByName(filename)
+    setModalContent(data.content);
+    setModalOpen(true);
+    // try {
+    //   const response = await fetch(`/doc/?doc_id=${filename}`);
+    //   const data = await response.json();
+    //   if (response.ok) {
+    //     setModalContent(data.content);
+    //     setModalOpen(true);
+    //   } else {
+    //     console.error("Error fetching document:", data.error);
+    //   }
+    // } catch (error) {
+    //   console.error("Error fetching document:", error);
+    // }
+  };
+
 
   const indexOfLastResult = currentPage * resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
@@ -211,7 +234,10 @@ export default function Home() {
               <tbody>
                 {currentResults.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.Filename}</td>
+                    {/* <td>{item.Filename}</td> */}
+                    <button onClick={() => openModal(item.Filename)} className={Styles.linkButton}>
+                      {item.Filename}
+                    </button>
                     <td>{item.Cosine_Similarity || item.Jaccard_Similarity}</td>
                   </tr>
                 ))}
@@ -236,6 +262,7 @@ export default function Home() {
           })}
         </div>
       </div>
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} content={modalContent} />
     </div>
   );
 }
