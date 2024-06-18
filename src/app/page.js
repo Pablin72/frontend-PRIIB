@@ -34,9 +34,20 @@ export default function Home() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
+
+    setFormData(prevFormData => {
+        let updatedFormData = { ...prevFormData, [name]: value };
+
+        if (name === 'representation') {
+            if (value === 'bow') {
+                updatedFormData.comparison = 'jaccard';
+            } else if (value === 'tf_idf') {
+                updatedFormData.comparison = 'cosine';
+            }
+        }
+
+        console.log("options: ", updatedFormData);
+        return updatedFormData;
     });
   };
 
@@ -48,15 +59,15 @@ export default function Home() {
       return;
     };
 
-    if(formData.preprocess === 'lemmatized' && formData.representation === 'bow' && formData.comparison === 'cosine') {
-      setResult(await lemmatized_bow_cosine(formData.textInput));
-      return;
-    };
+    // if(formData.preprocess === 'lemmatized' && formData.representation === 'bow' && formData.comparison === 'cosine') {
+    //   setResult(await lemmatized_bow_cosine(formData.textInput));
+    //   return;
+    // };
 
-    if(formData.preprocess === 'stemmized' && formData.representation === 'bow' && formData.comparison === 'cosine') {
-      setResult(await stemmed_bow_cosine(formData.textInput));
-      return;
-    };
+    // if(formData.preprocess === 'stemmized' && formData.representation === 'bow' && formData.comparison === 'cosine') {
+    //   setResult(await stemmed_bow_cosine(formData.textInput));
+    //   return;
+    // };
 
     if(formData.preprocess === 'lemmatized' && formData.representation === 'tf_idf' && formData.comparison === 'cosine') {
       setResult(await lemmatized_tfidf_cosine(formData.textInput));
@@ -78,15 +89,15 @@ export default function Home() {
       return;
     };
 
-    if(formData.preprocess === 'stemmized' && formData.representation === 'tf_idf' && formData.comparison === 'jaccard') {
-      setResult(await stemmed_tfidf_jaccard(formData.textInput));
-      return;
-    };
+    // if(formData.preprocess === 'stemmized' && formData.representation === 'tf_idf' && formData.comparison === 'jaccard') {
+    //   setResult(await stemmed_tfidf_jaccard(formData.textInput));
+    //   return;
+    // };
 
-    if(formData.preprocess === 'lemmatized' && formData.representation === 'tf_idf' && formData.comparison === 'jaccard') {
-      setResult(await lemmatized_tfidf_jaccard(formData.textInput));
-      return;
-    };
+    // if(formData.preprocess === 'lemmatized' && formData.representation === 'tf_idf' && formData.comparison === 'jaccard') {
+    //   setResult(await lemmatized_tfidf_jaccard(formData.textInput));
+    //   return;
+    // };
   };
 
   return (
@@ -107,17 +118,17 @@ export default function Home() {
           <div className={Styles.form_group}>
             <label>Documents Representation:</label>
             <input type="radio" id="tf_idf" name="representation" value="tf_idf" checked={formData.representation === 'tf_idf'} onChange={handleChange}></input>
-            <label htmlFor="tf_idf">TF-IDF</label>
+            <label htmlFor="tf_idf">TF-IDF - Cosine Sim.</label>
             <input type="radio" id="bow" name="representation" value="bow" checked={formData.representation === 'bow'} onChange={handleChange}></input>
-            <label htmlFor="bow">Bag of Words</label>
+            <label htmlFor="bow">Bag of Words - Jaccard Sim.</label>
           </div>
-          <div className={Styles.form_group}>
+          {/* <div className={Styles.form_group}>
             <label>Comparison Method:</label>
             <input type="radio" id="jaccard" name="comparison" value="jaccard" checked={formData.comparison === 'jaccard'} onChange={handleChange}></input>
             <label htmlFor="jaccard">Jaccard</label>
             <input type="radio" id="cosine" name="comparison" value="cosine" checked={formData.comparison === 'cosine'} onChange={handleChange}></input>
             <label htmlFor="cosine">Cosine</label>
-          </div>
+          </div> */}
           <div className={Styles.form_group}>
             <button type="submit" className={Styles.submit_button}>Search</button>
           </div>
