@@ -148,7 +148,7 @@ export default function Home() {
             {currentResults.map((item, index) => (
                 <tr key={index}>
                   <td>{item.Filename}</td>
-                  <td>{item.Cosine_Similarity}</td>
+                  <td>{item.Cosine_Similarity || item.Jaccard_Similarity}</td>
                 </tr>
               ))}
             </tbody>
