@@ -5,14 +5,11 @@ import Modal from './modal';
 
 import {
   getDocumentByName,
-  lemmatized_bow_cosine,
-  stemmed_bow_cosine,
   lemmatized_tfidf_cosine,
   stemmed_tfidf_cosine,
   stemmed_bow_jaccard,
   lemmatized_bow_jaccard,
-  stemmed_tfidf_jaccard,
-  lemmatized_tfidf_jaccard
+
 } from '../repos/inforRetrieval';
 
 function getPaginationRange(currentPage, totalPages, siblingCount = 1) {
@@ -72,18 +69,6 @@ export default function Home() {
     const data = await getDocumentByName(filename)
     setModalContent(data.content);
     setModalOpen(true);
-    // try {
-    //   const response = await fetch(`/doc/?doc_id=${filename}`);
-    //   const data = await response.json();
-    //   if (response.ok) {
-    //     setModalContent(data.content);
-    //     setModalOpen(true);
-    //   } else {
-    //     console.error("Error fetching document:", data.error);
-    //   }
-    // } catch (error) {
-    //   console.error("Error fetching document:", error);
-    // }
   };
 
 
@@ -134,16 +119,6 @@ export default function Home() {
 
     setLoading(true);
 
-    // if(formData.preprocess === 'lemmatized' && formData.representation === 'bow' && formData.comparison === 'cosine') {
-    //   setResult(await lemmatized_bow_cosine(formData.textInput));
-    //   return;
-    // };
-
-    // if(formData.preprocess === 'stemmized' && formData.representation === 'bow' && formData.comparison === 'cosine') {
-    //   setResult(await stemmed_bow_cosine(formData.textInput));
-    //   return;
-    // };
-
     try {
       if (formData.preprocess === 'lemmatized' && formData.representation === 'tf_idf' && formData.comparison === 'cosine') {
         handleSetResult(await lemmatized_tfidf_cosine(formData.textInput));
@@ -160,16 +135,6 @@ export default function Home() {
       if (formData.preprocess === 'lemmatized' && formData.representation === 'bow' && formData.comparison === 'jaccard') {
         handleSetResult(await lemmatized_bow_jaccard(formData.textInput));
       };
-
-      // if(formData.preprocess === 'stemmized' && formData.representation === 'tf_idf' && formData.comparison === 'jaccard') {
-      //   setResult(await stemmed_tfidf_jaccard(formData.textInput));
-      //   return;
-      // };
-
-      // if(formData.preprocess === 'lemmatized' && formData.representation === 'tf_idf' && formData.comparison === 'jaccard') {
-      //   setResult(await lemmatized_tfidf_jaccard(formData.textInput));
-      //   return;
-      // };
     } catch (e) {
       console.log("Error fetching results: ", e);
     } finally {
@@ -206,13 +171,6 @@ export default function Home() {
             <label>Threshold:</label>
             <input type="number" id="threshold" name="threshold" value={threshold} onChange={handleSetThreshold} className={Styles.input_text}></input>
           </div>
-          {/* <div className={Styles.form_group}>
-            <label>Comparison Method:</label>
-            <input type="radio" id="jaccard" name="comparison" value="jaccard" checked={formData.comparison === 'jaccard'} onChange={handleChange}></input>
-            <label htmlFor="jaccard">Jaccard</label>
-            <input type="radio" id="cosine" name="comparison" value="cosine" checked={formData.comparison === 'cosine'} onChange={handleChange}></input>
-            <label htmlFor="cosine">Cosine</label>
-          </div> */}
           <div className={Styles.form_group}>
             <button type="submit" className={Styles.submit_button} disabled={loading}>Search</button>
           </div>
